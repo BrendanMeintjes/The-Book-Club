@@ -1,0 +1,25 @@
+<% layout('layouts/boilerplate')%>
+    <div class="container mt-5">
+        <div class="col-md-6 col-xl-4 mx-auto min-vh-100">
+            <h1 class="form-heading mb-5">Login</h1>
+            <form action="/login" method="POST" class="validated-form" novalidate>
+                <div class="mb-3">
+                    <input type="text" class="form-control login mb-5" id="username" name="username" placeholder="Username" autofocus required>
+                    <div class="valid-feedback"> Looks good! </div>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control login mb-5" id="password" name="password" placeholder="Password" required>
+                    <div class="valid-feedback"> Looks good! </div>
+                </div>
+                <div class="d-grid">
+                    <button class="btn secondaryBtn active" type="submit" id="login-button">Login</button>
+                </div>
+                <a class="float-end pt-2" onclick="demoLogin()" id="guest-login">Login as Guest</a>
+                <div class="text-center py-5">
+                    <p class="d-inline">Don't have an account?</p>
+                    <a class="d-inline" href="/register">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="/javascripts/demoUser.js"></script>

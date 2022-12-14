@@ -1,0 +1,168 @@
+<% layout('layouts/boilerplate')%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <link rel="stylesheet" href="/stylesheets/tiny-slider.css">
+    <% if (friend.profilePicture.filename) { %>
+        <div class="my-5">
+            <img src="<%= friend.profilePicture.url %>" class="rounded-circle img-fluid profile-picture d-inline mx-auto" alt="...">
+            <% } else { %>
+                <i class="bi bi-person-circle d-inline" style="font-size: 100px"></i>
+                <% } %>
+                    <h3 class=" ms-3 d-inline">
+                        <%= friend.username %>
+                    </h3>
+        </div>
+        <div class="miniNav-header mb-5">
+        </div>
+        <section>
+            <div class="mb-3">
+                <h2 class="d-inline">Books I Have Read</h2>
+            </div>
+            <% if (read.length>1) {%> <div class="slider-container mb-5">
+                    <ul class="controls" id="friend-read-controls" aria-label="Carousel Navigation" tabindex="0">
+                        <li class="prev" data-controls="prev" aria-controls="friend-read" tabindex="-1">
+                            <i class="bi bi-arrow-left-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                        </li>
+                        <li class="next" data-controls="next" aria-controls="friend-read" tabindex="-1">
+                            <i class="bi bi-arrow-right-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                        </li>
+                    </ul>
+                    <div class="friend-read-slider" id="friend-read-slider">
+                        <% for (let book of read) {%>
+                            <div class="slider-item">
+                                <a class="" href="/books/read/<%= book._id%>">
+                                    <img src="<%= book.image %>" class="tns-img">
+                                </a>
+                            </div>
+                            <% } %>
+                    </div>
+                    <!-- <div class="text-end me-3">
+                    <a class="text-end" href="/books/read">See All</a>
+                </div> -->
+                </div>
+                <% } else if(read.length===1){ %>
+                    <div class="single-img">
+                        <% for (let book of read) {%>
+                            <img src="<%= book.image %>" class="tns-img">
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h5 class="empty">List Currently Empty</h5>
+                        <% } %>
+                            <div class="my-3">
+                                <h2 class="d-inline">Books I Want To Read</h2>
+                                <!-- <a class="d-inline" href="/books/wishlist">See All</a> -->
+                            </div>
+                            <% if (wishlist.length) {%>
+                                <div class="slider-container mb-5">
+                                    <ul class="controls" id="friend-wishlist-controls" aria-label="Carousel Navigation" tabindex="0">
+                                        <li class="prev" data-controls="prev" aria-controls="friend-wishlist" tabindex="-1">
+                                            <i class="bi bi-arrow-left-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                                        </li>
+                                        <li class="next" data-controls="next" aria-controls="friend-wishlist" tabindex="-1">
+                                            <i class="bi bi-arrow-right-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                                        </li>
+                                    </ul>
+                                    <div class="friend-wishlist-slider" id="friend-wishlist-slider">
+                                        <% for (let book of wishlist) {%>
+                                            <div class="slider-item">
+                                                <a class="" href="/books/wishlist/<%= book._id%>">
+                                                    <img src="<%= book.image %>" class="tns-img">
+                                                </a>
+                                            </div>
+                                            <% } %>
+                                    </div>
+                                </div>
+                                <% }else { %>
+                                    <h5 class="empty">List Currently Empty</h5>
+                                    <% } %>
+        </section>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.3.11/min/tiny-slider.js"></script>
+        <script type="text/javascript">
+
+            const readSlider = tns({
+                container: ".friend-read-slider",
+                loop: false,
+                items: 1,
+                slideBy: 1,
+                nav: false,
+                autoplay: true,
+                speed: 600,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                lazyload: true,
+                controlsContainer: "#friend-read-controls",
+                responsive: {
+
+                    400: {
+                        items: 2
+                    },
+
+                    640: {
+                        items: 3
+                    },
+
+                    768: {
+                        items: 4
+                    },
+
+                    992: {
+                        items: 6
+                    },
+
+                    1200: {
+                        items: 7
+                    },
+
+                    1400: {
+                        items: 8
+                    }
+                }
+            });
+
+
+        </script>
+        <script type="text/javascript">
+
+
+            const wishlistSlider = tns({
+                container: ".friend-wishlist-slider",
+                loop: false,
+                items: 1,
+                slideBy: 1,
+                nav: false,
+                autoplay: true,
+                speed: 600,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                lazyload: true,
+                controlsContainer: "#friend-wishlist-controls",
+                responsive: {
+
+                    400: {
+                        items: 2
+                    },
+
+                    640: {
+                        items: 3
+                    },
+
+                    768: {
+                        items: 4
+                    },
+
+                    992: {
+                        items: 6
+                    },
+
+                    1200: {
+                        items: 7
+                    },
+
+                    1400: {
+                        items: 8
+                    }
+                }
+            });
+
+        </script>

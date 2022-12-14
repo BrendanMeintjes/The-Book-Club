@@ -1,0 +1,74 @@
+<% layout('layouts/boilerplate')%>
+    <h1>All Books</h1>
+    <div>
+        <a href="/books/new">Add Book</a>
+    </div>
+
+
+
+    <% for (let search of searches) {%>
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="<%= search.image%>" alt="" class="img-fluid">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= search.title%>
+                        </h5>
+                        <p class="card-text">
+                            <%= search.author%>
+                        </p>
+                        <p class="card-text">
+                            <%= search.category%>
+                        </p>
+                        <p class="card-text">
+                            <%= search.publisher%>
+                        </p>
+                        <p class="card-text">
+                            <%= search.snippet%>
+                        </p>
+
+
+                        <form action="/bookclubs/<%= id%>/books" method="POST">
+
+                            <div>
+                                <input class="form-control-plaintext" type="hidden" id="title" name="book[title]"
+                                    value="<%= search.title%>">
+                            </div>
+                            <div>
+                                <input class="form-control-plaintext" type="hidden" id="author" name="book[author]"
+                                    value="<%= search.author%>">
+                            </div>
+                            <div>
+                                <input class="form-control-plaintext" type="hidden" id="snippet" name="book[snippet]"
+                                    value="<%= search.snippet%>">
+                            </div>
+                            <div>
+                                <input class="form-control-plaintext" type="hidden" id="author" name="book[publisher]"
+                                    value="<%= search.publisher%>">
+                            </div>
+                            <div>
+                                <input class="form-control-plaintext" type="hidden" id="image" name="book[image]"
+                                    value="<%= search.image%>">
+                            </div>
+                            <div>
+                                <input class="form-control-plaintext" type="text" id="image" name="book[category]"
+                                    value="<%= search.category%>">
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-success" type="submit">Add To Book Club</button>
+                            </div>
+                            <div>
+
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }%>

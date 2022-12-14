@@ -1,0 +1,30 @@
+<% layout('layouts/boilerplate')%>
+
+    <h1>My Book Clubs</h1>
+    <% for (let club of clubs) {%>
+        <div class="card">
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= club.name%>
+                        </h5>
+                        <p class="card-text">
+                            <%= club.admin.username%>
+                        </p>
+                        <p class="card-text">
+                            <%= club.description%>
+                        </p>
+                        <a class="btn btn-primary" href="/bookclubs/<%= club._id%>">View <%=club.name%></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }%>
+
+            <div>
+                <a class="btn btn-primary" href="/bookclubs/new">Create New Bookclub</a>
+            </div>
+            <!-- this will be the club id from API and associated data -->

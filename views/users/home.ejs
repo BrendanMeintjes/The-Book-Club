@@ -1,0 +1,338 @@
+<% layout('layouts/boilerplate')%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <link rel="stylesheet" href="/stylesheets/tiny-slider.css">
+    <div class="home-header">
+        <% if (user.profilePicture.filename) { %>
+            <div class="d-inline">
+                <img src="<%= user.profilePicture.url %>" class="rounded-circle img-fluid profile-picture d-inline mx-auto" alt="...">
+            </div>
+            <% } else { %>
+                <i class="bi bi-person-circle" style="font-size: 100px"></i>
+                <% } %>
+                    <div class=" ms-3 d-inline">
+                        <h3 class="d-inline">
+                            <%= user.username %>
+                        </h3>
+                    </div>
+    </div>
+    <div class="miniNav-header">
+        <button class="miniNav active" id="booksTab" onclick="showBooks()">Books</button>
+        <button class="miniNav" id="clubsTab" onclick="showClubs()">Clubs</button>
+        <button class="miniNav" id="friendsTab" onclick="showFriends()">Friends</button>
+    </div>
+    <section id="books" style="display: block;">
+        <div class="my-5">
+            <form class="d-flex search" id="searchForm" action="/books/search" method="POST">
+                <input class="form-control search" autocomplete=off type="text" name="search" required id="searchTerm" placeholder="Find Book...">
+                <select class="search" autocomplete=off name="select" required id="searchCategory">
+                    <option>title</option>
+                    <option>author</option>
+                    <option>publisher</option>
+                    <option>category</option>
+                </select>
+                <button class="btn search" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        <div class="mb-3">
+            <h2 class="d-inline">Books I Have Read</h2>
+        </div>
+        <% if (read.length>1) {%> <div class="slider-container mb-5">
+                <ul class="controls" id="read-controls" aria-label="Carousel Navigation" tabindex="0">
+                    <li class="prev" data-controls="prev" aria-controls="read" tabindex="-1">
+                        <i class="bi bi-arrow-left-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                    </li>
+                    <li class="next" data-controls="next" aria-controls="read" tabindex="-1">
+                        <i class="bi bi-arrow-right-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                    </li>
+                </ul>
+                <div class="read-slider" id="read-slider">
+                    <% for (let book of read) {%>
+                        <div class="slider-item">
+                            <a class="" href="/books/read/<%= book._id%>">
+                                <img src="<%= book.image %>" class="tns-img">
+                            </a>
+                        </div>
+                        <% } %>
+                </div>
+                <!-- <div class="text-end me-3">
+                                <a class="text-end" href="/books/read">See All</a>
+                            </div> -->
+            </div>
+            <% } else if(read.length===1){ %>
+                <div class="single-img">
+                    <% for (let book of read) {%>
+                        <img src="<%= book.image %>" class="tns-img">
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <h5 class="empty">List Currently Empty</h5>
+                    <% } %>
+                        <div class="my-3">
+                            <h2 class="d-inline">Books I Want To Read</h2>
+                            <!-- <a class="d-inline" href="/books/wishlist">See All</a> -->
+                        </div>
+                        <% if (wishlist.length) {%>
+                            <div class="slider-container mb-5">
+                                <ul class="controls" id="wishlist-controls" aria-label="Carousel Navigation" tabindex="0">
+                                    <li class="prev" data-controls="prev" aria-controls="wishlist" tabindex="-1">
+                                        <i class="bi bi-arrow-left-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                                    </li>
+                                    <li class="next" data-controls="next" aria-controls="wishlist" tabindex="-1">
+                                        <i class="bi bi-arrow-right-circle-fill carousel-control-custom" style="height: 100px;"></i>
+                                    </li>
+                                </ul>
+                                <div class="wishlist-slider" id="wishlist-slider">
+                                    <% for (let book of wishlist) {%>
+                                        <div class="slider-item">
+                                            <a class="" href="/books/wishlist/<%= book._id%>">
+                                                <img src="<%= book.image %>" class="tns-img">
+                                            </a>
+                                        </div>
+                                        <% } %>
+                                </div>
+                            </div>
+                            <% }else { %>
+                                <h5 class="empty">List Currently Empty</h5>
+                                <% } %>
+    </section>
+    <section id="clubs" style="display: none;" class="mt-3">
+        <div class="text-center">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn secondaryBtn mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Create New Bookclub</button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content club">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="exampleModalLabel">New Bookclub</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/bookclubs" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Name</label>
+                                <input class="form-control club" type="text" id="name" name="club[name]" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Description</label>
+                                <input class="form-control club" type="text" id="author" name="club[description]" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" name="club[picture]" id="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn secondaryBtn active">Create Bookclub</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-4 mb-5 mx-auto">
+            <% for (let club of clubAdmin){%>
+                <div class="col">
+                    <a class="club" href="/bookclubs/<%= club._id %>">
+                        <div class="card h-100 club mb-2">
+                            <img src="<%= club.picture.url %>" class="card-img-top bookclub" alt="...">
+                            <div class="card-body box">
+                                <div class="ribbon"><span>Admin</span>
+                                </div>
+                                <h5 class="card-title text-truncate">
+                                    <%= club.name %>
+                                </h5>
+                                <p class="card-text mb-0"> Description: </p>
+                                <p class="card-text text-truncate-5">
+                                    <%= club.description %>
+                                </p>
+                                <p class="card-text mb-0"> Current Book: </p>
+                                <% if (club.books[0]) { %>
+                                    <p class="card-text">
+                                        <%= club.books[0].title %>
+                                    </p>
+                                    <% } %>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+                    <% for (let club of clubMember) {%>
+                        <div class="col">
+                            <a class="club" href="/bookclubs/<%= club._id %>">
+                                <div class="card h-100 club mb-2">
+                                    <img src="<%= club.picture.url %>" class="card-img-top bookclub" alt="...">
+                                    <div class="card-body box">
+                                        <h5 class="card-title text-truncate">
+                                            <%= club.name %>
+                                        </h5>
+                                        <p class="card-text mb-0"> Description: </p>
+                                        <p class="card-text text-truncate-5">
+                                            <%= club.description %>
+                                        </p>
+                                        <p class="card-text mb-0"> Current Book: </p>
+                                        <% if (club.books[0]) { %>
+                                            <p class="card-text">
+                                                <%= club.books[0].title %>
+                                            </p>
+                                            <% } %>
+                                    </div>
+                                    <div class="card-footer">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
+        </div>
+
+    </section>
+    <section id="friends" style="display: none;">
+        <div class="my-5">
+            <form class="d-flex search" action="/searchuser" method="POST">
+                <input class="form-control search" autocomplete=off type="text" id="usersearch" name="usersearch" placeholder="Find Friends...">
+                <button class="btn search"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+        <div class="">
+        </div>
+        <div class="" id="infinite-scroll">
+            <div class="container friends">
+                <h2 class="mt-3 mb-0">Friends</h2>
+                <hr class="mt-1">
+                <% for (let friend of user.friends) {%>
+                    <div class="d-flex mb-3">
+                        <div class="me-auto">
+                            <a href="/friend/<%= friend._id %>">
+                                <div class="d-inline-block align-middle">
+                                    <img src="<%= friend.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline me-3" alt="...">
+                                </div>
+                                <div class="d-inline-block align-middle">
+                                    <h5 class="card-title text-truncate py-0 my-0" style="max-width: 170px; border: none;">
+                                        <%= friend.username%>
+                                    </h5>
+                                    <!-- <h6 class="pb-0 mb-0"></h6> -->
+                                </div>
+                            </a>
+                        </div>
+                        <div class="ms-auto">
+                            <button type="button" class="btn primaryBtn" data-bs-toggle="modal" data-bs-target="#remove<%=friend._id%>">
+                                <!-- Button trigger modal -->
+                                <i class="bi bi-trash3"></i> Remove
+                            </button>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="remove<%=friend._id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="remove<%=friend._id%>Label" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content club">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title" id="remove<%=friend._id%>Label">Remove Friend</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start"> Are you sure you want to remove <%=friend.username%> as a friend? </div>
+                                    <div class="modal-footer">
+                                        <form class="d-inline" action="/removefriend" method="POST">
+                                            <input type="text" name="friendId" id="friendId" value="<%=friend._id%>" hidden>
+                                            <button class="btn primaryBtn active" type="submit"><i class="bi bi-trash3"></i> Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <hr>
+                    <% } %>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="/javascripts/miniNav.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.3.11/min/tiny-slider.js"></script>
+    <script type="text/javascript">
+
+        const readSlider = tns({
+            container: ".read-slider",
+            loop: false,
+            items: 1,
+            slideBy: 1,
+            nav: false,
+            autoplay: true,
+            speed: 600,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            lazyload: true,
+            controlsContainer: "#read-controls",
+            responsive: {
+
+                400: {
+                    items: 2
+                },
+
+                640: {
+                    items: 3
+                },
+
+                768: {
+                    items: 4
+                },
+
+                992: {
+                    items: 6
+                },
+
+                1200: {
+                    items: 7
+                },
+
+                1400: {
+                    items: 8
+                }
+            }
+        });
+
+
+    </script>
+    <script type="text/javascript">
+
+
+        const wishlistSlider = tns({
+            container: ".wishlist-slider",
+            loop: false,
+            items: 1,
+            slideBy: 1,
+            nav: false,
+            autoplay: true,
+            speed: 600,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            lazyload: true,
+            controlsContainer: "#wishlist-controls",
+            responsive: {
+
+                400: {
+                    items: 2
+                },
+
+                640: {
+                    items: 3
+                },
+
+                768: {
+                    items: 4
+                },
+
+                992: {
+                    items: 6
+                },
+
+                1200: {
+                    items: 7
+                },
+
+                1400: {
+                    items: 8
+                }
+            }
+        });
+
+    </script>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Book Club</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <%- include('partials/navbar')%>
+        <main class="container">
+            <div class="row vh-100 my-auto">
+                <div class="col-12 col-md-6 my-auto text-center">
+                    <h1 class="pb-3 splash-header">The Book Club</h1>
+                    <p class="lead"> Welcome to The Book Club! <br> Explore an extensive range of books <br> Create or join a bookclub and share your passion for reading with others</p>
+                    <div class="d-flex justify-content-evenly">
+                        <a href="/Register" class="btn btn-lg secondaryBtn active px-5">Sign Up</a>
+                        <a href="/login" class="btn btn-lg secondaryBtn px-5">Log In</a>
+                    </div>
+                </div>
+                <div class="col-0 col-md-6 bg-image-home">
+                    <div class="home-pic"></div>
+                </div>
+            </div>
+        </main>
+        <%- include('partials/footer')%>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

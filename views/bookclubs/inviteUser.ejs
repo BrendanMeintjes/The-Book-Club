@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate')%>
+    <div class="" id="infinite-scroll">
+        <div class="container friends">
+            <h2 class="mt-3 mb-0">Results</h2>
+            <hr class="mt-1">
+
+
+            <% for (let search of searches) {%>
+
+                <% if(search.id !=club.admin) { %>
+                    <div>
+
+                        <form action="/bookclubs/<%= club._id%>/inviteuser" method="POST" class="" novalidate>
+
+                            <div class="d-inline-block align-middle">
+                                <img src="<%= search.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline me-3" alt="...">
+                            </div>
+                            <div class="d-inline-block align-middle">
+                                <h5 class="card-title text-truncate py-0 my-0" style="max-width: 170px; border: none;">
+                                    <%= search.username%>
+                                </h5>
+                                <input class="form-control" type="hidden" id="" name="user" value="<%= search.id%>">
+                            </div>
+
+
+                            <% if(!club.invites.includes(search.id) && !club.members.includes(search.id)) { %>
+
+                                <button class="btn secondaryBtn active float-end align-middle"">Add User</button>
+
+                            <% } %>
+
+                                <% if(club.invites.includes(search.id)) { %>
+
+                                        <button class=" btn secondaryBtn float-end align-middle"" formaction=" /bookclubs/<%=club._id%>/deleteinvite">Cancel
+                                    Invitation</button>
+
+                                <% } %>
+
+                                    <% if(club.members.includes(search.id)) { %>
+
+
+                                        <button class="btn secondaryBtn float-end align-middle"" formaction=" /bookclubs/<%=club._id%>/deletemember">Delete User</button>
+                                        <% } %>
+                        </form>
+                        <hr>
+                    </div>
+
+                    <% } %>
+
+                        <% } %>
+        </div>
+    </div>

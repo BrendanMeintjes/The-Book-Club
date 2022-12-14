@@ -1,0 +1,13 @@
+{
+  "editor.defaultFormatter": null,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "prettier.enable": true,
+  "prettier.proseWrap": "preserve",
+  "prettier.bracketSameLine": true,
+  "prettier.singleAttributePerLine": true,
+  "prettier.printWidth": 300,
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  }
+}

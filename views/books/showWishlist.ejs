@@ -1,0 +1,273 @@
+<% layout('layouts/boilerplate')%>
+    <link rel="stylesheet" href="/stylesheets/rating.css">
+    <form class="d-inline" action="/books/wishlist/<%= book._id%>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+    <form class="d-inline" action="/books/wishlist/changetoread" method="POST">
+        <div>
+            <input class="form-control-plaintext" type="hidden" id="title" name="book[title]" value="<%= book.title%>">
+        </div>
+        <div>
+            <input class="form-control-plaintext" type="hidden" id="author" name="book[author]" value="<%= book.author%>">
+        </div>
+        <button type=" submit">Change to Wishlist</button>
+    </form>
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="<%= book.image%>" class="card-img-top" alt="...">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h5 class="card-title">Title: <%= book.title%>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Author: <%= book.author%>
+                    </h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Publisher: <%= book.publisher%>
+                    </h6>
+                    <p class="card-text">
+                        <%= book.snippet%>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sticky-top comment">
+        <div class="row mb-3 gx-0">
+            <div class="col-2 col-lg-1">
+                <img src="<%= currentUser.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline mx-3" alt="..." style="width:4rem;height: 4rem;">
+            </div>
+            <div class="col-10 col-lg-11 p-2">
+                <form action="/books/wishlist/<%= book._id%>/comments" method="POST" class="mb-3 validated-form" novalidate>
+                    <!-- <div class="mb-3">
+                                    <label for="rating">Rating</label>
+                                    <input type="range" min="0" max="5" id="rating" name="comment[rating]">
+                                </div> -->
+                    <div class="mb-3 px-0">
+                        <textarea class="form-control comment-form" name="comment[body]" id="body" cols="30" rows="5" placeholder=" Leave a comment..." required></textarea>
+                        <div class="valid-feedback"> Looks good! </div>
+                        <div class="d-inline my-0">
+                            <h5 class="d-inline" style="vertical-align: top;">Rating:</h5>
+                            <fieldset class="starability-basic d-inline" style="vertical-align: bottom;">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="0" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <button class="btn btn-success" style="float: right;">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% for (let comment of book.comments) {%>
+        <div id="<%= comment._id %>" name="<%= comment._id %>">
+            <div class="row pb-2 mb-3 gx-0">
+                <div class="col-2 col-md-1">
+                    <img src="<%= comment.author.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline mx-3" alt="..." style="width:4rem;height: 4rem;">
+                </div>
+                <div class="col-10 col-md-11 p-2 comment-bg">
+                    <h5 class="d-inline">
+                        <%= comment.author.username %>
+                    </h5>
+                    <p class="my-2" style="word-wrap: break-word;">
+                        <%= comment.body%>
+                    </p>
+                    <p class="starability-result" data-rating="<%= comment.rating%>"> Rated: <%= comment.rating%> stars </p>
+                    <hr class="mb-1">
+                    <% const timeDiff=currentDate - comment.createdAt; if (timeDiff>24*60*60e3 && timeDiff<7*24*60*60e3){ %>
+                            <p class="d-inline border-end">
+                                <%= Math.floor(timeDiff / (24*60*60e3))%>d
+                            </p>
+                            <% } else if (timeDiff>60*60e3 && timeDiff<24*60*60e3){ %>
+                                    <p class="d-inline border-end">
+                                        <%= Math.floor(timeDiff / (60*60e3))%>h
+                                    </p>
+                                    <% } else if (timeDiff> 60e3 && timeDiff<60*60e3) { %>
+                                            <p class="d-inline border-end">
+                                                <%= Math.floor(timeDiff / 60e3)%>m
+                                            </p>
+                                            <% } else { %>
+                                                <p class="d-inline border-end">
+                                                    <%= Math.floor(timeDiff / 1e3) %>s
+                                                </p>
+                                                <% } %>
+                                                    <% if(comment.replies.length) { %>
+                                                        <p class="d-inline">
+                                                            <a class="" data-bs-toggle="collapse" href="#comment<%= comment._id %>" role="button" aria-expanded="false" aria-controls="comment<%= comment._id %>">
+                                                                <%= comment.replies.length %> replies
+                                                            </a>
+                                                        </p>
+                                                        <% } else if (comment.replies.length===0){ %>
+                                                            <p class="d-inline ps-1">0 replies </p>
+                                                            <% } %>
+                                                                <p class="d-inline ps-3">
+                                                                    <a class="" data-bs-toggle="collapse" href="#replyTo<%= comment._id %>" role="button" aria-expanded="false" aria-controls="replyTo<%= comment._id %>"> reply </a>
+                                                                </p>
+                                                                <% if(( currentUser && comment.author.equals(currentUser._id)) ) { %>
+                                                                    <p class="d-inline ps-3">
+                                                                        <!-- Button trigger modal -->
+                                                                        <a class="" data-bs-toggle="modal" role="button" data-bs-target="#edit<%= comment._id %>"> edit </a>
+                                                                    </p>
+                                                                    <% } if(( currentUser && comment.author.equals(currentUser._id)) || ( currentUser && club.admin.equals(currentUser._id)) ) { %>
+                                                                        <p class="d-inline ps-3">
+                                                                            <!-- Button trigger modal -->
+                                                                            <a class="" data-bs-toggle="modal" role="button" data-bs-target="#delete<%= comment._id %>"> delete </a>
+                                                                        </p>
+                                                                        <% } %>
+                                                                            <div class="row justify-content-center">
+                                                                                <div class="col-10 px-0">
+                                                                                    <div class="collapse" id="replyTo<%= comment._id %>">
+                                                                                        <form action="/books/wishlist/<%= book._id%>/comments/<%= comment._id%>" method="POST" class="mb-3 validated-form" novalidate>
+                                                                                            <div class="my-3">
+                                                                                                <textarea class="form-control reply" name="reply[body]" id="body" cols="30" rows="3" placeholder="Reply..." required></textarea>
+                                                                                                <div class="valid-feedback"> Looks good! </div>
+                                                                                            </div>
+                                                                                            <button class="btn btn-success">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="collapse" id="comment<%= comment._id %>">
+                                                                                <div class="my-3">
+                                                                                    <% for (let reply of comment.replies){ %>
+                                                                                        <div class="row">
+                                                                                            <div class="col-2 col-md-1 ps-0">
+                                                                                                <img src="<%= comment.author.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline mx-3" alt="..." style="width:4rem;height: 4rem;">
+                                                                                            </div>
+                                                                                            <div class="col-9 col-md-10 p-2 mb-3 replies">
+                                                                                                <div class="col">
+                                                                                                    <h5 class="mb-2">
+                                                                                                        <%= reply.author.username %>
+                                                                                                    </h5>
+                                                                                                    <p style="word-wrap: break-word;">
+                                                                                                        <%= reply.body%>
+                                                                                                    </p>
+                                                                                                    <hr class="mb-1">
+                                                                                                    <% if(( currentUser && reply.author.equals(currentUser._id)) ) { %>
+                                                                                                        <p class="d-inline">
+                                                                                                            <!-- Button trigger modal -->
+                                                                                                            <a class="" data-bs-toggle="modal" role="button" data-bs-target="#edit<%= reply._id %>"> edit </a>
+                                                                                                        </p>
+                                                                                                        <% } if(( currentUser && reply.author.equals(currentUser._id)) || ( currentUser && club.admin.equals(currentUser._id)) ) { %>
+                                                                                                            <p class="d-inline ps-3">
+                                                                                                                <!-- Button trigger modal -->
+                                                                                                                <a class="" data-bs-toggle="modal" role="button" data-bs-target="#delete<%= reply._id %>"> delete </a>
+                                                                                                            </p>
+                                                                                                            <% } %>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal fade" id="edit<%= reply._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit<%= reply._id %>Label" aria-hidden="true">
+                                                                                            <div class="modal-dialog">
+                                                                                                <div class="modal-content">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h5 class="modal-title" id="edit<%= reply._id %>Label"> Edit Reply</h5>
+                                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body">
+                                                                                                        <form action="/books/wishlist/<%= book._id%>/comments/<%=comment._id%>/reply/<%= reply._id%>?_method=PUT" method="POST" class="mb-3 validated-form" novalidate>
+                                                                                                            <div class="mb-3">
+                                                                                                                <label class="form-label" for="edit-body">update Comment</label>
+                                                                                                                <textarea type="text" class="form-control" id="edit-body" name="reply[body]" cols="30" rows="3" required><%= reply.body%></textarea>
+                                                                                                                <div class="valid-feedback"> Looks good! </div>
+                                                                                                            </div>
+                                                                                                    </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                        <button class="btn btn-success">Save Changes</button>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="modal fade" id="delete<%= reply._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete<%= reply._id %>Label" aria-hidden="true">
+                                                                                            <div class="modal-dialog">
+                                                                                                <div class="modal-content">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h5 class="modal-title" id="delete<%= reply._id %>Label"> Delete Comment</h5>
+                                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                    </div>
+                                                                                                    <div class="modal-body"> Are you sure you want to delete this comment? </div>
+                                                                                                    <div class="modal-footer">
+                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                        <form class="d-inline" action="/books/wishlist/<%= book._id%>/comments/<%= reply._id%>?_method=DELETE" method="POST">
+                                                                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <% } %>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% if(( currentUser && comment.author.equals(currentUser._id)) ) { %>
+                                                                                <div class="modal fade" id="edit<%= comment._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit<%= comment._id %>Label" aria-hidden="true">
+                                                                                    <div class="modal-dialog">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h5 class="modal-title" id="edit<%= comment._id %>Label"> Edit Comment</h5>
+                                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <form action="/books/wishlist/<%= book._id%>/comments/<%= comment._id%>?_method=PUT" method="POST" class="mb-3 validated-form" novalidate>
+                                                                                                    <div class="mb-3">
+                                                                                                        <fieldset class="starability-basic">
+                                                                                                            <legend> Rating: </legend>
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-no-rate" class="input-no-rate" name="comment[rating]" value="0" checked aria-label="No rating." />
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-first-rate1" name="comment[rating]" value="1" />
+                                                                                                            <label for="<%= comment._id%>-edit-first-rate1" title="Terrible">1 star</label>
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-first-rate2" name="comment[rating]" value="2" />
+                                                                                                            <label for="<%= comment._id%>-edit-first-rate2" title="Not good">2 stars</label>
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-first-rate3" name="comment[rating]" value="3" />
+                                                                                                            <label for="<%= comment._id%>-edit-first-rate3" title="Average">3 stars</label>
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-first-rate4" name="comment[rating]" value="4" />
+                                                                                                            <label for="<%= comment._id%>-edit-first-rate4" title="Very good">4 stars</label>
+                                                                                                            <input type="radio" id="<%= comment._id%>-edit-first-rate5" name="comment[rating]" value="5" />
+                                                                                                            <label for="<%= comment._id%>-edit-first-rate5" title="Amazing">5 stars</label>
+                                                                                                        </fieldset>
+                                                                                                    </div>
+                                                                                                    <div class="mb-3">
+                                                                                                        <label class="form-label" for="edit-body">update Comment</label>
+                                                                                                        <textarea type="text" class="form-control" id="edit-body" name="comment[body]" cols="30" rows="3" required><%= comment.body%></textarea>
+                                                                                                        <div class="valid-feedback"> Looks good! </div>
+                                                                                                    </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                <button class="btn btn-success">Save Changes</button>
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal fade" id="delete<%= comment._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete<%= comment._id %>Label" aria-hidden="true">
+                                                                                    <div class="modal-dialog">
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h5 class="modal-title" id="delete<%= comment._id %>Label"> Delete Comment</h5>
+                                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                            </div>
+                                                                                            <div class="modal-body"> Are you sure you want to delete this comment? </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                <form class="d-inline" action="/books/wishlist/<%= book._id%>/comments/<%= comment._id%>?_method=DELETE" method="POST">
+                                                                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                                                                </form>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <% } %>
+                </div>
+            </div>
+        </div>
+        <% }%>

@@ -1,0 +1,22 @@
+.bg-image-home {
+    background: url(../images/cover2.png),
+        url(../images/Ellipse.png);
+    width: 50%;
+    margin: auto;
+    aspect-ratio: 1/1;
+    background-position: center;
+    background-size: cover, 90%;
+    box-shadow: 0px 4px 8px #5D2C0C, none;
+    background-repeat: no-repeat;
+}
+
+/* .home-pic {
+    background:
+        url(../images/cover2.png);
+    width: 100%;
+    margin-right: 25%;
+    aspect-ratio: 1/1;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+} */

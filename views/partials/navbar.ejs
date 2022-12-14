@@ -1,0 +1,26 @@
+<nav class="navbar fixed-top navbar-expand-lg mynav">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home"><i class="bi bi-book-half"></i> The Book Club</a>
+    <button class="navbar-toggler" id="toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="bi bi-list"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <% if(!currentUser) {%>
+          <a href="/login" class="nav-link">Log In</a>
+          <a href="/register" class="nav-link">Sign Up</a>
+          <% } else {%>
+            <a href="/notifications" class="nav-link position-relative">
+              <i class="bi bi-bell-fill"></i>
+              <% if((currentUser.notifications.length+currentUser.friendRequestsRecieved.length+currentUser.invites.length)> 0) { %> <span class="position-absolute top-5 start-80 translate-middle badge rounded-pill bg-danger" style="font-size: 0.5em;">
+                  <%= currentUser.notifications.length+currentUser.friendRequestsRecieved.length+currentUser.invites.length%>
+                    <span class="visually-hidden">Notifications</span>
+                </span>
+                <% } %>
+            </a>
+            <a href="/logout" class="nav-link">Log Out</a>
+            <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
