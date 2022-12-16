@@ -34,6 +34,7 @@ const friendsRoutes = require('./routes/individual/friends');
 const notificationRoutes = require('./routes/notifications');
 const invitationRoutes = require('./routes/invitations');
 const MongoStore = require('connect-mongo');
+const { prototype } = require('ejs-mate/lib/block');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/the-book-club';
 
@@ -188,6 +189,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 })
 
-app.listen(3000, () => {
-    console.log('serving on port 3000')
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+    console.log(`serving on port ${port}`)
 });
