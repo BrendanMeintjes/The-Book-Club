@@ -68,9 +68,10 @@ module.exports.editReply = async (req, res) => {
 };
 
 module.exports.deleteReply = async (req, res) => {
-    const { id, bookId, commentId } = req.params;
-    await Book.findByIdAndUpdate(bookId, { $pull: { comments: commentId } });
-    await Comment.findByIdAndDelete(commentId);
-    req.flash('success', 'Comment deleted!');
+    const { id, bookId, commentId, replyId } = req.params;
+    await Book.findById(bookId);
+    await Comment.findByIdAndUpdate(commentId, { $pull: { replies: replyId } });
+    await Reply.findByIdAndDelete(replyId);
+    req.flash('success', 'Reply deleted!');
     res.redirect(`/bookclubs/${id}/books/${bookId}`);
 }

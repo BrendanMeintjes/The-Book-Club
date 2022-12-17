@@ -743,11 +743,13 @@ PICTURE STYLES
 
 .comment-profile-picture {
   max-width: 80%;
+  aspect-ratio: 1/1;
 }
 
 #archived img.card-img-top {
   border-top-left-radius: 10px;
 }
+
 
 .profile-picture {
   width: 8em;

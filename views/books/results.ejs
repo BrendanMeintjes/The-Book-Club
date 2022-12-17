@@ -13,71 +13,71 @@
                     </select>
                     <button class="btn btn-outline-success search" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-            </div>
-        </div>
-    </div>
-    </div>
-    <% for (let search of searches) {%>
-        <div class="card" id="<%=search._id%>">
-            <div class="row">
-                <div class="col-md-3 col-lg-2">
-                    <img src="<%= search.image%>" alt="" class="img-fluid">
-                </div>
-                <div class="col-md-9 col-lg-10">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= search.title%>
-                        </h5>
-                        <p class="card-text">
-                            <%= search.author%>
-                        </p>
-                        <p class="card-text">
-                            <%= search.category%>
-                        </p>
-                        <p class="card-text">
-                            <%= search.publisher%>
-                        </p>
-                        <p class="card-text">
-                            <%= search.snippet%>
-                        </p>
-                        <form action="/books/read" method="POST">
-                            <div>
-                                <input class="form-control-plaintext" type="hidden" id="title" name="book[title]" value="<%= search.title%>">
-                            </div>
-                            <div>
-                                <input class="form-control-plaintext" type="hidden" id="author" name="book[author]" value="<%= search.author%>">
-                            </div>
-                            <div>
-                                <input class="form-control-plaintext" type="hidden" id="snippet" name="book[snippet]" value="<%= search.snippet%>">
-                            </div>
-                            <div>
-                                <input class="form-control-plaintext" type="hidden" id="author" name="book[publisher]" value="<%= search.publisher%>">
-                            </div>
-                            <div>
-                                <input class="form-control-plaintext" type="hidden" id="image" name="book[image]" value="<%= search.image%>">
-                            </div>
-                            <div>
-                                <input class="form-control-plaintext" type="text" id="image" name="book[category]" value="<%= search.category%>">
-                            </div>
-                            <div hidden>
-                                <input class="form-control-plaintext" type="text" name="bookId" value="<%= search._id%>">
-                            </div>
-                            <% if(currentUser) { %>
-                                <div class="mb-3 mx-0">
-                                    <% if (read.some(e=> e.title === search.title && e.author == search.author)) { const book = read.find(item => item.title ===search.title); %> <button class="active results-btn btn-read d-inline" type="submit" formaction="/books/read/<%= book.id%>?_method=DELETE">Read</button>
-                                        <% } else if(wishlist.some(e=> e.title === search.title) && wishlist.some(e=> e.author == search.author)) { %> <button class="results-btn btn-read d-inline" type=" submit" formaction="/books/wishlist/changetoread">Read</button>
-                                            <% } else { %> <button class="results-btn btn-read d-inline" type="submit">Read</button>
-                                                <% } %>
-                                                    <% if (wishlist.some(e=> e.title === search.title) && wishlist.some(e=> e.author == search.author)) { const book = wishlist.find(item => item.title ===search.title); %> <button class="active results-btn btn-wishlist d-inline" type="submit" formaction="/books/wishlist/<%= book.id%>?_method=DELETE">Wishlist</button>
-                                                        <% } else if (read.some(e=> e.title === search.title && e.author == search.author)) { const book = read.find(item => item.title ===search.title); %> <button class="results-btn btn-wishlist d-inline" type=" submit" formaction="/books/read/changetowishlist">Wishlist</button>
-                                                            <% } else { %>
-                                                                <button class="results-btn btn-wishlist d-inline" type="submit" formaction="/books/wishlist">Wishlist</button>
-                                                                <% } %>
-                                                                    <% } %>
+                <div class="mt-5">
+                    <% for (let search of searches) {%>
+                        <div class="card" id="<%=search._id%>">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-2">
+                                    <img src="<%= search.image%>" alt="" class="img-fluid">
                                 </div>
-                        </form>
-                    </div>
+                                <div class="col-md-9 col-lg-10">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= search.title%>
+                                        </h5>
+                                        <p class="card-text">
+                                            Author:
+                                            <%= search.author%>
+                                        </p>
+                                        <p class="card-text">
+                                            Publisher:
+                                            <%= search.publisher%>
+                                        </p>
+                                        <p class="card-text">
+                                            <%= search.snippet%>
+                                        </p>
+                                        <form action="/books/read" method="POST">
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="title" name="book[title]" value="<%= search.title%>">
+                                            </div>
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="author" name="book[author]" value="<%= search.author%>">
+                                            </div>
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="snippet" name="book[snippet]" value="<%= search.snippet%>">
+                                            </div>
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="author" name="book[publisher]" value="<%= search.publisher%>">
+                                            </div>
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="image" name="book[image]" value="<%= search.image%>">
+                                            </div>
+                                            <div>
+                                                <input class="form-control-plaintext" type="hidden" id="image" name="book[category]" value="<%= search.category%>">
+                                            </div>
+                                            <div hidden>
+                                                <input class="form-control-plaintext" type="text" name="bookId" value="<%= search._id%>">
+                                            </div>
+                                            <% if(currentUser) { %>
+                                                <div class="mb-3 mx-0">
+                                                    <% if (read.some(e=> e.title === search.title && e.author == search.author)) { const book = read.find(item => item.title ===search.title); %> <button class="active results-btn btn-read d-inline" type="submit" formaction="/books/read/<%= book.id%>?_method=DELETE">Read</button>
+                                                        <% } else if(wishlist.some(e=> e.title === search.title) && wishlist.some(e=> e.author == search.author)) { %> <button class="results-btn btn-read d-inline" type=" submit" formaction="/books/wishlist/changetoread">Read</button>
+                                                            <% } else { %> <button class="results-btn btn-read d-inline" type="submit">Read</button>
+                                                                <% } %>
+                                                                    <% if (wishlist.some(e=> e.title === search.title) && wishlist.some(e=> e.author == search.author)) { const book = wishlist.find(item => item.title ===search.title); %> <button class="active results-btn btn-wishlist d-inline" type="submit" formaction="/books/wishlist/<%= book.id%>?_method=DELETE">Wishlist</button>
+                                                                        <% } else if (read.some(e=> e.title === search.title && e.author == search.author)) { const book = read.find(item => item.title ===search.title); %> <button class="results-btn btn-wishlist d-inline" type=" submit" formaction="/books/read/changetowishlist">Wishlist</button>
+                                                                            <% } else { %>
+                                                                                <button class="results-btn btn-wishlist d-inline" type="submit" formaction="/books/wishlist">Wishlist</button>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }%>
                 </div>
             </div>
         </div>
-        <% }%>
+    </div>

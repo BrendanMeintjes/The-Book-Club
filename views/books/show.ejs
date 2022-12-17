@@ -270,22 +270,21 @@
                                                                                                                         </div>
                                                                                                                         <div class="modal fade" id="edit<%= reply._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="edit<%= reply._id %>Label" aria-hidden="true">
                                                                                                                             <div class="modal-dialog">
-                                                                                                                                <div class="modal-content">
+                                                                                                                                <div class="modal-content club">
                                                                                                                                     <div class="modal-header">
-                                                                                                                                        <h5 class="modal-title" id="edit<%= reply._id %>Label"> Edit Reply</h5>
+                                                                                                                                        <h1 class="modal-title" id="edit<%= reply._id %>Label"> Edit Reply</h1>
                                                                                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                                                     </div>
                                                                                                                                     <div class="modal-body">
                                                                                                                                         <form action="/books/read/<%= book._id%>/comments/<%=comment._id%>/reply/<%= reply._id%>?_method=PUT" method="POST" class="mb-3 validated-form" novalidate>
                                                                                                                                             <div class="mb-3">
-                                                                                                                                                <label class="form-label" for="edit-body">update Comment</label>
+                                                                                                                                                <label class="form-label" for="edit-body">Update Comment</label>
                                                                                                                                                 <textarea type="text" class="form-control" id="edit-body" name="reply[body]" cols="30" rows="3" required><%= reply.body%></textarea>
                                                                                                                                                 <div class="valid-feedback"> Looks good! </div>
                                                                                                                                             </div>
                                                                                                                                     </div>
                                                                                                                                     <div class="modal-footer">
-                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                                        <button class="btn btn-success">Save Changes</button>
+                                                                                                                                        <button class="btn primaryBtn active">Save Changes</button>
                                                                                                                                         </form>
                                                                                                                                     </div>
                                                                                                                                 </div>
@@ -293,16 +292,15 @@
                                                                                                                         </div>
                                                                                                                         <div class="modal fade" id="delete<%= reply._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="delete<%= reply._id %>Label" aria-hidden="true">
                                                                                                                             <div class="modal-dialog">
-                                                                                                                                <div class="modal-content">
+                                                                                                                                <div class="modal-content club">
                                                                                                                                     <div class="modal-header">
-                                                                                                                                        <h5 class="modal-title" id="delete<%= reply._id %>Label"> Delete Comment</h5>
+                                                                                                                                        <h1 class="modal-title" id="delete<%= reply._id %>Label"> Delete Comment</h1>
                                                                                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                                                     </div>
                                                                                                                                     <div class="modal-body"> Are you sure you want to delete this comment? </div>
                                                                                                                                     <div class="modal-footer">
-                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                                                                                         <form class="d-inline" action="/books/read/<%= book._id%>/comments/<%= reply._id%>?_method=DELETE" method="POST">
-                                                                                                                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                                                                                                            <button class="btn primaryBtn active">Delete <i class="bi bi-trash3"></i></button>
                                                                                                                                         </form>
                                                                                                                                     </div>
                                                                                                                                 </div>
@@ -316,7 +314,7 @@
                                                                                                                     <div class="modal-dialog">
                                                                                                                         <div class="modal-content">
                                                                                                                             <div class="modal-header">
-                                                                                                                                <h5 class="modal-title" id="edit<%= comment._id %>Label"> Edit Comment</h5>
+                                                                                                                                <h1 class="modal-title" id="edit<%= comment._id %>Label"> Edit Comment</h1>
                                                                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                                             </div>
                                                                                                                             <div class="modal-body">
@@ -338,14 +336,13 @@
                                                                                                                                         </fieldset>
                                                                                                                                     </div>
                                                                                                                                     <div class="mb-3">
-                                                                                                                                        <label class="form-label" for="edit-body">update Comment</label>
+                                                                                                                                        <label class="form-label" for="edit-body">Update Comment</label>
                                                                                                                                         <textarea type="text" class="form-control" id="edit-body" name="comment[body]" cols="30" rows="3" required><%= comment.body%></textarea>
                                                                                                                                         <div class="valid-feedback"> Looks good! </div>
                                                                                                                                     </div>
                                                                                                                             </div>
                                                                                                                             <div class="modal-footer">
-                                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                                                                                                <button class="btn btn-success">Save Changes</button>
+                                                                                                                                <button class="btn primaryBtn active">Save Changes</button>
                                                                                                                                 </form>
                                                                                                                             </div>
                                                                                                                         </div>
@@ -355,14 +352,13 @@
                                                                                                                     <div class="modal-dialog">
                                                                                                                         <div class="modal-content">
                                                                                                                             <div class="modal-header">
-                                                                                                                                <h5 class="modal-title" id="delete<%= comment._id %>Label"> Delete Comment</h5>
+                                                                                                                                <h1 class="modal-title" id="delete<%= comment._id %>Label"> Delete Comment</h1>
                                                                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                                             </div>
                                                                                                                             <div class="modal-body"> Are you sure you want to delete this comment? </div>
                                                                                                                             <div class="modal-footer">
-                                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                                                                                 <form class="d-inline" action="/books/wishlist<%= book._id%>/comments/<%= comment._id%>?_method=DELETE" method="POST">
-                                                                                                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                                                                                                    <button class="btn primaryBtn active">Delete <i class="bi bi-trash3"></i></button>
                                                                                                                                 </form>
                                                                                                                             </div>
                                                                                                                         </div>
