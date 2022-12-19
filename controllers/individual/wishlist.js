@@ -52,5 +52,5 @@ module.exports.changeToRead = async (req, res) => {
 module.exports.deleteBook = async (req, res) => {
     const { id } = req.params;
     await Book.findByIdAndDelete(id);
-    res.redirect('/books/wishlist');
+    res.redirect('/home');
 }

@@ -33,10 +33,13 @@ module.exports.createComment = async (req, res) => {
     await book.save();
     await club.save();
     req.flash('success', 'New comment posted!');
-    if (parseInt(book._id) === parseInt(club.books[0]._id)) {
-        res.redirect(`/bookclubs/${club._id}/#${comment._id}`)
+    if (bookId == club.books[0]._id) {
+        res.redirect(`/bookclubs/${club._id}/#${comment._id}`);
+
+    } else {
+        res.redirect(`/bookclubs/${club._id}/books/${book._id}/#${comment._id}`)
+
     };
-    res.redirect(`/bookclubs/${club._id}/books/${book._id}/#${comment._id}`);
 };
 
 
@@ -53,13 +56,26 @@ module.exports.editComment = async (req, res) => {
     await Comment.findByIdAndUpdate(commentId, { ...req.body.comment });
     await Book.findByIdAndUpdate(bookId, { ...req.body.book });
     req.flash('success', 'Comment successfuly updated!');
-    res.redirect(`/bookclubs/${id}/books/${bookId}`);
+    if (bookId == parseIntclub.books[0]._id) {
+        res.redirect(`/bookclubs/${club._id}`)
+    } else {
+        res.redirect(`/bookclubs/${id}/books/${bookId}`);
+
+    };
 };
 
 module.exports.deleteComment = async (req, res) => {
     const { id, bookId, commentId } = req.params;
+    const club = await BookClub.findById(id).populate({
+        path: 'books', options: { sort: { 'createdAt': -1 } }
+    });
     await Book.findByIdAndUpdate(bookId, { $pull: { comments: commentId } });
     await Comment.findByIdAndDelete(commentId);
     req.flash('success', 'Comment deleted!');
-    res.redirect(`/bookclubs/${id}/books/${bookId}`);
+    if (bookId == club.books[0]._id) {
+        res.redirect(`/bookclubs/${club._id}`);
+    } else {
+        res.redirect(`/bookclubs/${id}/books/${bookId}`);
+
+    };
 }

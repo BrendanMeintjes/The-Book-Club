@@ -432,6 +432,9 @@ BUTTON STYLES
 *****************************************************************************************************************************************************
  */
 
+.btn:active {
+  border: 5px solid red !important;
+}
 
 .primaryBtn {
   background: none;
@@ -500,8 +503,8 @@ BUTTON STYLES
   /* font-weight: 700;
   font-size: 15px; */
   /* letter-spacing: 2px; */
-  color: #383736;
-  border: 1px #383736 solid;
+  color: #5D2C0C;
+  border: 1px #5D2C0C solid;
   border-radius: 4px;
   /* text-transform: uppercase; */
   text-align: left;
@@ -531,8 +534,8 @@ BUTTON STYLES
   /* font-weight: 700;
   font-size: 15px; */
   /* letter-spacing: 2px; */
-  color: #383736;
-  border: 1px #383736 solid;
+  color: white;
+  border: 1px #5D2C0C solid;
   border-radius: 4px;
   /* text-transform: uppercase; */
   text-align: left;
@@ -542,7 +545,7 @@ BUTTON STYLES
   background: none;
   z-index: 1;
   cursor: pointer;
-  background-color: blue;
+  background-color: #5D2C0C;
   color: white;
   transition: 0.5s ease;
   -o-transition: 0.5s ease;
@@ -561,8 +564,8 @@ BUTTON STYLES
   /* font-weight: 700;
   font-size: 15px; */
   /* letter-spacing: 2px; */
-  color: #383736;
-  border: 1px #383736 solid;
+  color: #5D2C0C;
+  border: 1px #5D2C0C solid;
   border-radius: 4px;
   /* text-transform: uppercase; */
   text-align: left;
@@ -590,8 +593,8 @@ BUTTON STYLES
   /* font-weight: 700;
   font-size: 15px; */
   /* letter-spacing: 2px; */
-  color: #383736;
-  border: 1px #383736 solid;
+  color: white;
+  border: 1px #5D2C0C solid;
   border-radius: 4px;
   /* text-transform: uppercase; */
   text-align: left;
@@ -601,7 +604,7 @@ BUTTON STYLES
   background: none;
   z-index: 1;
   cursor: pointer;
-  background: blue;
+  background: #5D2C0C;
   color: white;
   transition: 0.5s ease;
   -o-transition: 0.5s ease;
@@ -615,7 +618,7 @@ BUTTON STYLES
   content: '\F62A';
   font-family: "bootstrap-icons";
   position: absolute;
-  color: #383736;
+  color: #5D2C0C;
   left: 75%;
   opacity: 0;
   transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
@@ -626,7 +629,7 @@ BUTTON STYLES
   content: '\F62A';
   font-family: "bootstrap-icons";
   position: absolute;
-  color: #383736;
+  color: #5D2C0C;
   left: 70%;
   opacity: 0;
   transition: all 250ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
@@ -668,7 +671,7 @@ BUTTON STYLES
 
 .btn-wishlist:hover {
   width: 100px;
-  background-color: blue;
+  background-color: #5D2C0C;
   color: white;
   transform-origin: left;
   transition: 0.5s ease;
@@ -676,7 +679,7 @@ BUTTON STYLES
 
 .btn-read:hover {
   width: 82px;
-  background-color: blue;
+  background-color: #5D2C0C;
   color: white;
   transform-origin: left;
   transition: 0.5s ease;
@@ -685,7 +688,7 @@ BUTTON STYLES
 .btn-wishlist.active:hover {
   width: 100px;
   background-color: white;
-  color: #383736;
+  color: #5D2C0C;
   transform-origin: left;
   transition: 0.5s ease;
 }
@@ -693,7 +696,7 @@ BUTTON STYLES
 .btn-read.active:hover {
   width: 82px;
   background-color: white;
-  color: #383736;
+  color: #5D2C0C;
   transform-origin: left;
   transition: 0.5s ease;
 }
@@ -701,7 +704,7 @@ BUTTON STYLES
 button.btn-read.active:has(~ button.btn-wishlist:hover),
 .btn-read:hover~.btn-wishlist.active {
   background: white;
-  color: #383736;
+  color: #5D2C0C;
 }
 
 /* #guest-login {
@@ -720,7 +723,7 @@ PICTURE STYLES
   background: url(../images/cover2.png),
     url(../images/Ellipse.png);
   width: 50%;
-  margin: 1.85em 0 0 0;
+  margin: 1.85em auto 0 auto;
   aspect-ratio: 1/1;
   background-position: center;
   background-size: 100%, 90%;

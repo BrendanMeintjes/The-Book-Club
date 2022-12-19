@@ -38,10 +38,11 @@ module.exports.createReply = async (req, res) => {
     await reply.save();
     req.flash('success', 'Reply posted!');
 
-    if (parseInt(book._id) == parseInt(club.books[0]._id)) {
+    if (bookId == club.books[0]._id) {
         res.redirect(`/bookclubs/${club._id}/#${comment._id}`)
+    } else {
+        res.redirect(`/bookclubs/${club._id}/books/${book._id}/#${comment._id}`);
     };
-    res.redirect(`/bookclubs/${club._id}/books/${book._id}/#${comment._id}`);
 };
 
 
@@ -61,10 +62,11 @@ module.exports.editReply = async (req, res) => {
     });
     await Reply.findByIdAndUpdate(replyId, { ...req.body.reply });
     req.flash('success', 'Comment successfuly updated!');
-    if (parseInt(bookId) == parseInt(club.books[0]._id)) {
-        res.redirect(`/bookclubs/${id}/#${commentId}`);
-    }
-    res.redirect(`/bookclubs/${id}/books/${bookId}`);
+    if (bookId == club.books[0]._id) {
+        res.redirect(`/bookclubs/${club._id}/#${commentId}`)
+    } else {
+        res.redirect(`/bookclubs/${club._id}/books/${bookId}/#${commentId}`);
+    };
 };
 
 module.exports.deleteReply = async (req, res) => {
@@ -73,5 +75,9 @@ module.exports.deleteReply = async (req, res) => {
     await Comment.findByIdAndUpdate(commentId, { $pull: { replies: replyId } });
     await Reply.findByIdAndDelete(replyId);
     req.flash('success', 'Reply deleted!');
-    res.redirect(`/bookclubs/${id}/books/${bookId}`);
+    if (bookId == club.books[0]._id) {
+        res.redirect(`/bookclubs/${id}`);
+    } else {
+        res.redirect(`/bookclubs/${id}/books/${bookId}`);
+    }
 }
