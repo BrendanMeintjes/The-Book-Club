@@ -433,7 +433,7 @@ BUTTON STYLES
  */
 
 .btn:active {
-  border: 5px solid red !important;
+  border: none;
 }
 
 .primaryBtn {
