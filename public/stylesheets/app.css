@@ -140,6 +140,15 @@ FORMS AND SEARCH BAR STYLES
 *****************************************************************************************************************************************************
  */
 
+input:active,
+input:focus,
+input:focus-visible,
+input:focus-within {
+  box-shadow: 2px 4px 4px #5D2C0C;
+  border: 2px solid #5D2C0C !important;
+  background: inset 0 0 5rem rgba(221, 163, 93, 0.5), 0px 4px 8px rgba(93, 44, 12, 0.25);
+}
+
 form.search {
   border-radius: 8px;
   background: linear-gradient(90deg, #5D2C0C 0%, #AA6132 49.79%, #DDA35D 100%);
@@ -188,6 +197,8 @@ button.search {
   border: none;
   background: none;
   color: white;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 button.search:hover {
@@ -432,8 +443,10 @@ BUTTON STYLES
 *****************************************************************************************************************************************************
  */
 
-.btn:active .btn:focus {
-  border: none;
+.btn:active,
+.btn:focus,
+.btn:focus-visible {
+  box-shadow: none;
 }
 
 
@@ -746,8 +759,9 @@ PICTURE STYLES
 }
 
 .comment-profile-picture {
-  max-width: 80%;
   aspect-ratio: 1/1;
+  max-width: 80%;
+  overflow: hidden;
 }
 
 #archived img.card-img-top {
