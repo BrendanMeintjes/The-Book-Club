@@ -25,26 +25,25 @@
 
                             <% if(!club.invites.includes(search.id) && !club.members.includes(search.id)) { %>
 
-                                <button class="btn secondaryBtn active float-end align-middle"">Add User</button>
-
-                            <% } %>
-
-                                <% if(club.invites.includes(search.id)) { %>
-
-                                        <button class=" btn secondaryBtn float-end align-middle"" formaction=" /bookclubs/<%=club._id%>/deleteinvite">Cancel
-                                    Invitation</button>
+                                <button class="btn secondaryBtn active float-end align-middle">Add User</button>
 
                                 <% } %>
 
-                                    <% if(club.members.includes(search.id)) { %>
+                                    <% if(club.invites.includes(search.id)) { %>
 
+                                        <button class=" btn secondaryBtn float-end align-middle" formaction=" /bookclubs/<%=club._id%>/deleteinvite">Cancel
+                                            Invitation</button>
 
-                                        <button class="btn secondaryBtn float-end align-middle"" formaction=" /bookclubs/<%=club._id%>/deletemember">Delete User</button>
                                         <% } %>
+
+                                            <% if(club.members.includes(search.id)) { %>
+
+
+                                                <button class="btn secondaryBtn float-end align-middle" formaction=" /bookclubs/<%=club._id%>/deletemember">Delete User</button>
+                                                <% } %>
                         </form>
                         <hr>
                     </div>
-
                     <% } %>
 
                         <% } %>

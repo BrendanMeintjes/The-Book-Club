@@ -1,57 +1,62 @@
 <% layout('layouts/boilerplate')%>
-    <h1>Search results</h1>
+    <div class="" id="infinite-scroll">
+        <div class="container friends">
+            <h2 class="mt-3 mb-0">Invite Friends</h2>
+            <hr class="mt-1">
+            <% for (let search of searches) {%>
 
-    <% for (let search of searches) {%>
+                <% if(user.id !==search.id) {%>
+                    <div>
 
-        <% if(user.id !== search.id) {%>
+                        <form action="/sendfriendrequest" method="POST" class="" novalidate>
 
-            <form action="/sendfriendrequest" method="POST" class="" novalidate>
 
-                <div class="mb-3">
-                    <p>
-                        <%= search.username%>
-                    </p>
-                    <input class="form-control" type="hidden" id="" name="friend" value="<%= search.id%>">
-                </div>
+                            <div class="d-inline-block align-middle">
+                                <img src="<%= search.profilePicture.url %>" class="rounded-circle img-fluid friend-profile-picture d-inline me-3" alt="...">
+                            </div>
+                            <div class="d-inline-block align-middle">
+                                <h5 class="card-title text-truncate py-0 my-0" style="max-width: 170px; border: none;">
+                                    <%= search.username%>
+                                </h5>
+                                <input class="form-control" type="hidden" id="" name="user" value="<%= search.id%>">
+                            </div>
 
-                <% if(!user.friends.includes(search.id) && !user.friendRequestsSent.includes(search.id) &&
-                    !user.friendRequestsRecieved.includes(search.id)) { %>
+                            <% if(!user.friends.includes(search.id) && !user.friendRequestsSent.includes(search.id) && !user.friendRequestsRecieved.includes(search.id)) { %>
 
-                    <div class="mb-3">
-                        <button class="btn btn-success">Add Friend</button>
+                                <button class="btn secondaryBtn active float-end align-middle"> Send Invite</button>
+
+                                <% } %>
+
+                                    <% if(user.friendRequestsSent.includes(search.id)) { %>
+
+                                        <button class="btn secondaryBtn active float-end align-middle" formaction="/cancelfriendrequest">Cancel Invite</button>
+
+
+                                        <% } %>
+
+                                            <% if(user.friendRequestsRecieved.includes(search.id) ) { %>
+
+                                                <button class=" btn secondaryBtn float-end align-middle" formaction="/addfriend">Add Friend</button>
+                                                <button class=" btn secondaryBtn float-end align-middle" formaction="/declineFriendRequest">Decline</button>
+
+
+                                                <% } %>
+
+                                                    <% if(user.friends.includes(search.id) ) { %>
+
+                                                        <button class=" btn secondaryBtn float-end align-middle" formaction="/deletefriend">Delete
+                                                            Friend</button>
+
+                                                        <% } %>
+
+
+                        </form>
+                        <hr>
                     </div>
 
                     <% } %>
 
-                        <% if(user.friendRequestsSent.includes(search.id)) { %>
+                        <% } %>
 
-                            <div class="mb-3">
-                                <button class="btn btn-success" formaction="/cancelfriendrequest">Cancel Friend
-                                    Request</button>
-                            </div>
-
-                            <% } %>
-
-                                <% if(user.friendRequestsRecieved.includes(search.id) ) { %>
-
-                                    <div class="mb-3">
-                                        <button class="btn btn-success" formaction="/addfriend">Add Friend</button>
-                                        <button class="btn btn-success"
-                                            formaction="/declineFriendRequest">Decline</button>
-                                    </div>
-
-                                    <% } %>
-
-                                        <% if(user.friends.includes(search.id) ) { %>
-
-                                            <div class="mb-3">
-                                                <button class="btn btn-success" formaction="/deletefriend">Delete
-                                                    Friend</button>
-                                            </div>
-
-                                            <% } %>
-
-            </form>
-            <% } %>
-
-                <% } %>
+        </div>
+    </div>

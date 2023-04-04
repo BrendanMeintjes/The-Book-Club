@@ -8,94 +8,139 @@
             <% } if( user.friendRequestsRecieved.length) {%>
                 <% for (let request of user.friendRequestsRecieved) {%>
                     <form action="/addfriend" method="POST" class="" novalidate>
-                        <div class="mb-3 d-inline">
-                            <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= request.profilePicture.url %>" alt="">
-                            <p class="d-inline">
-                                <%= request.username %> wants to be your friend
-                            </p>
-                            <input class="form-control-plaintext" type="hidden" id="friend" name="friend" value="<%= request.id%>">
-                        </div>
-                        <div class=" float-end mb-3 d-inline">
-                            <button class="d-inline btn secondaryBtn active">Accept</button>
-                            <button class="d-inline btn secondaryBtn" type="submit" formaction="/declinefriendrequest">Decline</button>
+                        <div class="row mb-3">
+
+                            <div class="col notification-picture me-auto pe-0">
+                                <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= request.profilePicture.url %>" alt="">
+                            </div>
+                            <div class="col px-0">
+                                <p class="d-inline">
+                                    <%= request.username %> wants to be your friend
+                                </p>
+                                <input class="form-control-plaintext" type="hidden" id="friend" name="friend" value="<%= request.id%>">
+                            </div>
+
+                            <div class="text-end col notification-buttons mb-3 ps-0">
+                                <button class="d-inline btn secondaryBtn active">Accept</button>
+                                <button class="d-inline btn secondaryBtn" type="submit" formaction="/declinefriendrequest">Reject</button>
+                            </div>
                         </div>
                     </form>
                     <hr>
                     <% }} if( user.invites.length) {%>
                         <% for (let invite of user.invites) {%>
                             <form action="/joinclub" method="POST" class="" novalidate>
-                                <div class="mb-3 d-inline">
-                                    <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= invite.admin.profilePicture.url %>" alt="">
-
-                                    <p class="d-inline">
-                                        <%= invite.admin.username %> has invited you to join "<%= invite.name %>"
-                                    </p>
-                                    <input class="form-control-plaintext" type="hidden" id="club" name="club" value="<%= invite.id%>">
-                                </div>
-                                <div class=" float-end mb-3 d-inline">
-                                    <button class="d-inline btn secondaryBtn active">Accept</button>
-                                    <button class="d-inline btn secondaryBtn" type="submit" formaction="/rejectclub">Decline</button>
+                                <div class="row mb-3">
+                                    <div class="col notification-picture me-auto pe-0">
+                                        <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= invite.admin.profilePicture.url %>" alt="">
+                                    </div>
+                                    <div class="col px-0">
+                                        <p class="d-inline">
+                                            <%= invite.admin.username %> has invited you to join <b>
+                                                    <%= invite.name %>
+                                                </b>
+                                        </p>
+                                        <input class="form-control-plaintext" type="hidden" id="club" name="club" value="<%= invite.id%>">
+                                    </div>
+                                    <div class="text-end col notification-buttons mb-3 ps-0">
+                                        <button class=" btn secondaryBtn active">Join</button>
+                                        <button class=" btn secondaryBtn" type="submit" formaction="/rejectclub">Reject</button>
+                                    </div>
                                 </div>
                             </form>
                             <% } } if(user.notifications.length) { %>
                                 <% for (let notification of user.notifications) {%>
-                                    <div class="d-inline">
-                                        <form class="d-inline" action="/notifications/<%= notification._id%>?_method=DELETE" method="POST">
+                                    <form class="d-inline" action="/notifications/<%= notification._id%>?_method=DELETE" method="POST">
 
-                                            <button class=" text-start" style="background: none; border:none; color: #5D2C0C;">
 
-                                                <% if (notification.club) { %>
+                                        <% if (notification.club) { %>
+                                            <div class="row mb-3">
+                                                <div class="col notification-picture me-auto pe-0">
+
                                                     <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= notification.sender.profilePicture.url %>" alt="">
+                                                </div>
 
-                                                    <% if (notification.reply) {%>
+
+                                                <% if (notification.reply) {%>
+                                                    <div class="col px-0">
+
                                                         <p class="d-inline">
                                                             <%= notification.sender.username %> Replied to your comment on <%= notification.comment.book.title %> at <%= notification.comment.bookclub.name%>:
                                                         </p>
                                                         <p class="text-truncate-5">
                                                             "<%= notification.reply.body %>"
                                                         </p>
+                                                    </div>
+
+                                                    <div class="text-end col notification-buttons mb-3 ps-0">
+                                                        <button class=" btn secondaryBtn active">View</button>
+                                                        <button class=" btn secondaryBtn" type="submit" formaction="/rejectclub">Clear</button>
+                                                    </div>
 
 
-                                                        <% } else if (notification.comment) { %>
+                                                    <% } else if (notification.comment) { %>
+                                                        <div class="col px-0">
+
                                                             <p class="d-inline">
                                                                 <%= notification.sender.username %> Commented on <%= notification.comment.book.title %> at <%= notification.comment.bookclub.name%>:
                                                             </p>
                                                             <p class="text-truncate-5">
                                                                 "<%= notification.comment.body %>"
                                                             </p>
+                                                        </div>
+                                                        <div class="text-end col notification-buttons mb-3 ps-0">
+                                                            <button class=" btn secondaryBtn active">View</button>
+                                                            <button class=" btn secondaryBtn" type="submit" formaction="/rejectclub">Clear</button>
+                                                        </div>
+                                            </div>
 
-                                                            <% }} else if (notification.comment) { %>
-                                                                <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= notification.sender.profilePicture.url %>" alt="">
 
-                                                                <p class="d-inline">
-                                                                    <%= notification.sender.username %> Commented on your post:
-                                                                </p>
-                                                                <p class="text-truncate-5">
-                                                                    "<%= notification.comment.body %>"
-                                                                </p>
-                                                                <% } else if (notification.reply ) {%>
-                                                                    <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= notification.sender.profilePicture.url %>" alt="">
 
-                                                                    <p class="d-inline">
-                                                                        <%= notification.sender.username %> Replied to your post:
-                                                                    </p>
-                                                                    <p class="text-truncate-5">
-                                                                        "<%= notification.reply.body %>"
-                                                                    </p>
-                                                                    <p>
-                                                                        <%=notification.reply.comment._id%>
-                                                                    </p>
-                                                                    <% } %>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="d-inline">
-                                        <form class="d-inline" action="/notifications/<%= notification._id%>/delete?_method=DELETE" method="POST">
-                                            <button class="btn btn-lg d-inline float-end">
-                                                <i class="bi bi-x-lg"></i> </button>
-                                        </form>
-                                    </div>
-                                    <br>
-                                    <% } %>
-                                        <% } %>
+                                            <% }} else if (notification.comment) { %>
+                                                <div class="row mb-3">
+                                                    <div class="col notification-picture me-auto pe-0">
+                                                        <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= notification.sender.profilePicture.url %>" alt="">
+                                                    </div>
+
+                                                    <div class="col px-0">
+
+                                                        <p class="d-inline">
+                                                            <%= notification.sender.username %> Commented on your post:
+                                                        </p>
+                                                        <p class="text-truncate-5">
+                                                            "<%= notification.comment.body %>"
+                                                        </p>
+                                                    </div>
+                                                    <div class="text-end col notification-buttons mb-3 ps-0">
+                                                        <button class=" btn secondaryBtn active">View</button>
+                                                        <button class=" btn secondaryBtn" type="submit" formaction="/rejectclub">Clear</button>
+                                                    </div>
+                                                </div>
+                                                <% } else if (notification.reply ) {%>
+                                                    <div class="row mb-3">
+                                                        <div class="col notification-picture me-auto pe-0">
+                                                            <img class="rounded-circle img-fluid friend-profile-picture d-inline me-3" src="<%= notification.sender.profilePicture.url %>" alt="">
+                                                        </div>
+
+                                                        <div class="col px-0">
+
+                                                            <p class="d-inline">
+                                                                <%= notification.sender.username %> Replied to your post:
+                                                            </p>
+                                                            <p class="text-truncate-5">
+                                                                "<%= notification.reply.body %>"
+                                                            </p>
+                                                            <p>
+                                                                <%=notification.reply.comment._id%>
+                                                            </p>
+                                                        </div>
+                                                        <div class="text-end col notification-buttons mb-3 ps-0">
+                                                            <button class=" btn secondaryBtn active">View</button>
+                                                            <button class=" btn secondaryBtn" type="submit" formaction="/rejectclub">Clear</button>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+
+                                                        <% } %>
+                                                            <% } %>
     </div>

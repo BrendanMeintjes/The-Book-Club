@@ -3,6 +3,10 @@ GENERAL PAGE STYLES
 *****************************************************************************************************************************************************
  */
 
+b {
+  font-weight: 600;
+}
+
 .visible {
   visibility: visible !important;
 }
@@ -73,6 +77,29 @@ div.club-header {
   text-underline-offset: 3px;
 }
 
+#friends a {
+  color: #5D2C0C;
+  text-decoration: none;
+}
+
+ @media (min-width: 500px) {
+  .notification-buttons {
+    -ms-flex: 0 0 160px;
+    flex: 0 0 160px;
+  }
+}
+
+ @media (max-width: 499px) {
+  .notification-buttons {
+    -ms-flex: 0 0 125px;
+    flex: 0 0 125px;
+  }
+}
+
+.notification-picture {
+  -ms-flex: 0 0 73px;
+  flex: 0 0 73px;
+}
 
 /* **************************************************************************************************************************************************
 NAVBAR STYLES
@@ -448,6 +475,13 @@ BUTTON STYLES
 .btn:focus-visible {
   box-shadow: none;
 }
+
+
+ @media (max-width: 500px) {
+   .btn {
+     padding: 0 0.25em;
+   }
+ }
 
 
 .primaryBtn {
